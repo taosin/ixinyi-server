@@ -2,7 +2,7 @@
 * @Author: iMocco
 * @Date:   2017-03-16 15:50:43
 * @Last Modified by:   iMocco
-* @Last Modified time: 2017-03-20 18:52:57
+* @Last Modified time: 2017-03-20 19:19:12
 */
 
 var AV = require('leanengine')
@@ -89,13 +89,21 @@ module.exports = function (app) {
 		var start = req.query.start
 		var limit = req.query.limit
 		var title = req.query.title
-		const query = new AV.Query('Articles');
+		var query = new AV.Query('Articles');
 		query.descending('createdAt');
 		query.limit(limit); 
 		query.skip(start);
 		query.contains('title',title);
 		query.find().then(function(results) {
-			dispatch('searchArticles', results);
-		}, function(error) {});
+			res.json({
+				code:100,
+				data:results
+			})
+		}, function(error) {
+			res.json({
+				code:101,
+				data:error
+			})
+		});
 	})
 }
