@@ -2,7 +2,7 @@
 * @Author: iMocco
 * @Date:   2017-03-16 15:50:43
 * @Last Modified by:   iMocco
-* @Last Modified time: 2017-03-20 11:03:06
+* @Last Modified time: 2017-03-20 18:52:57
 */
 
 var AV = require('leanengine')
@@ -47,7 +47,6 @@ module.exports = function (app) {
 	// 添加文章
 	app.post('/article', function(req, res) {
 		var data = req.body;
-		console.log(data);
 		const Article = AV.Object.extend('Articles');
 		const addarticle = new Article();
 		addarticle.save({
@@ -66,5 +65,37 @@ module.exports = function (app) {
 				data:error
 			})
 		})
+	})
+
+	// 根据ID获取文章
+	app.get('/articleById', function(req, res) {
+		var id = req.query.id;
+		var query = new AV.Query('Articles');
+		query.get(id).then(function(result) {
+			res.json({
+				code:100,
+				data:result
+			})
+		}, function(error) {
+			res.json({
+				code:101,
+				data:error
+			})
+		})
+	})
+
+	// 模糊查询文章
+	app.get('/queryArticles', function(req, res) {
+		var start = req.query.start
+		var limit = req.query.limit
+		var title = req.query.title
+		const query = new AV.Query('Articles');
+		query.descending('createdAt');
+		query.limit(limit); 
+		query.skip(start);
+		query.contains('title',title);
+		query.find().then(function(results) {
+			dispatch('searchArticles', results);
+		}, function(error) {});
 	})
 }
