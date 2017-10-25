@@ -2,7 +2,7 @@
 * @Author: iMocco
 * @Date:   2017-03-16 
 * @Last Modified by:   iMocco
-* @Last Modified time: 2017-03-17 14:50:48
+* @Last Modified time: 2017-10-25 18:19:42
 */
 
 var config = require('./config')
@@ -35,28 +35,28 @@ Server.prototype.start = function (externalApp) {
   self.httpServer.on('error', function (error) {
     if (error.errno === 'EADDRINUSE') {
       console.error(
-                '(EADDRINUSE) Cannot start Hacker News.',
-                'Port ' + config.port + ' is already in use by another program.',
-                'Is another node instance already running?'
-            )
+        '(EADDRINUSE) Cannot start inxiyi Server',
+        'Port ' + config.port + ' is already in use by another program.',
+        'Is another node instance already running?'
+        )
     } else {
       console.error(
-                '(Code: ' + error.errno + ')',
-                'There was an error starting your server.'
-            )
+        '(Code: ' + error.errno + ')',
+        'There was an error starting your server.'
+        )
     }
     process.exit(-1)
   })
   self.httpServer.on('connection', function () {
         //        todo
-  })
+      })
   self.httpServer.on('listening', function () {
         //       todo
-  })
+      })
 }
 
 Server.prototype.stop = function (externalApp) {
     //    todo
-}
+  }
 
-module.exports = Server
+  module.exports = Server
