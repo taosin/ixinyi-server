@@ -2,7 +2,7 @@
 * @Author: iMocco
 * @Date:   2017-03-16 15:50:43
 * @Last Modified by:   iMocco
-* @Last Modified time: 2017-03-20 19:19:12
+* @Last Modified time: 2017-10-27 00:52:35
 */
 
 var AV = require('leanengine')
@@ -10,18 +10,10 @@ var articleService = require('../service/articleService')
 module.exports = function (app) {
 
 	// 获取文章总数
-	app.get('/articlesCount', function(req, res) {
-		var query = new AV.Query('Articles')
-		query.count().then(function (count) {
-			res.json({
-				code:100,
-				data:count
-			})
-		}, function (error) {
-			res.json({
-				code:101,
-				data:error
-			})
+	app.get('/articles/readInfos', function * (req, res) {
+		var data = yield * articleService.getReadInfos(req.query);
+		res.json({
+			data: data
 		})
 	})
 	// 获取文章

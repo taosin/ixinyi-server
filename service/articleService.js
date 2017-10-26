@@ -2,23 +2,17 @@
 * @Author: iMocco
 * @Date:   2017-03-16 17:46:23
 * @Last Modified by:   iMocco
-* @Last Modified time: 2017-03-17 14:22:33
+* @Last Modified time: 2017-10-27 00:52:27
 */
 'use strict'
 var co = require('co')
-var AV = require('leanengine')
 var leancloudDao = require('../storage/leancloudDao')
+var table = 'ReadInfo';
 
 class ArticleService{
-	getCount (json){
-		return new Promise(function (resolve, reject) {
-			const query = new AV.Query('Articles')
-			query.count().then(function (count) {
-				resolve(count)
-			}, function (error) {
-				reject(error)
-			})
-		})
+	* getReadInfos (json){
+		var data = yield leancloudDao.getDataFindPage(table, json.page,json.params, json.timeParam, json.startTime, json.endTime,json.sortBy, json.sort);
+		return data;
 	}
 }
 module.exports = new ArticleService()
