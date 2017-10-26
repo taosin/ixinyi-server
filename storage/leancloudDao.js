@@ -2,13 +2,15 @@
 * @Author: iMocco
 * @Date:   2017-03-16 16:59:33
 * @Last Modified by:   iMocco
-* @Last Modified time: 2017-10-27 00:48:27
+* @Last Modified time: 2017-10-27 04:13:39
 */
 'use strict'
 
 var AV = require('leanengine')
 
 class leancloudDao {
+
+	// 获取总数
 	getCount(table){
 		return new Promise(function (resolve, reject) {
 			const query = new AV.Query(table)
@@ -20,6 +22,7 @@ class leancloudDao {
 		}.bind(this))
 	}
 
+	// 获取分页数据
 	getDataFindPage(table, page, params, timeParam, startTime, endTime, sortBy, sort){
 		return new Promise(function (resolve, reject) {
 			const query = new AV.Query(table)
@@ -65,6 +68,17 @@ class leancloudDao {
 			}, function (error) {
 				reject(err)
 			})
+		}.bind(this))
+	}
+
+	// 删除数据
+	deleteRecord(table, objectId){
+		return new Promise(function (resolve, reject) {
+			var  deleteData= AV.Object.createWithoutData(table, objectId);
+			deleteData.destroy().then(function (success) {
+				resolve(success);
+			}, function (error) {
+			});
 		}.bind(this))
 	}
 }
