@@ -93,5 +93,27 @@ class leancloudDao {
         }.bind(this))
     }
 
+    createRecord(table, data) {
+        return new Promise(function(resolve, reject) {
+            var CreateTable = AV.object.extend(table)
+            var createTable = new CreateTable()
+            if (data) {
+                var newParams = JSON.parse(data)
+                for (var key in newParams) {
+                    createTable.set(key, newParams[key])
+                }
+            }
+            createTable.set('isDeleted', false)
+            createTable.save().then(function(todo) {
+                if (todo.id) {
+                    resolve(todo.id)
+                } else {
+                    resolve('failure')
+                }
+            }, function(error) {
+                reject(error)
+            })
+        }.bind(this))
+    }
 }
 module.exports = new leancloudDao()
