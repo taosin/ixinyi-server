@@ -41,7 +41,7 @@ class leancloudDao {
                     query.equalTo(key, newParams[key])
                 }
             }
-            query.equalTo('isDeleted', false)
+            // query.equalTo('isDeleted', false)
             if (sort) {
                 switch (sort) {
                     case 1:
@@ -93,6 +93,7 @@ class leancloudDao {
         }.bind(this))
     }
 
+    // 添加数据
     createRecord(table, data) {
         return new Promise(function(resolve, reject) {
             var CreateTable = AV.object.extend(table)
@@ -110,6 +111,42 @@ class leancloudDao {
                 } else {
                     resolve('failure')
                 }
+            }, function(error) {
+                reject(error)
+            })
+        }.bind(this))
+    }
+
+    // 手机号码获取验证码
+    requestSmsCode(phone) {
+        return new Promise(function(resolve, reject) {
+            AV.Cloud.requestSmsCode(phone).then(function(success) {
+                console.info('success')
+            }, function(error) {
+                console.info('error')
+            })
+        })
+    }
+
+    // 根据手机号码和验证注册
+    signUpOrlogInWithMobilePhone(phone, smsCode) {
+        return new Promise(function(resolve, reject) {
+            AV.User.signUpOrlogInWithMobilePhone(phone, smsCode).then(function(success) {
+                console.info('success')
+            }, function(error) {
+                console.info('error')
+            })
+        })
+    }
+
+    // 用户名和密码注册
+    signUpWithUsernameAndPassword(username, password) {
+        return new Promise(function(resolve, reject) {
+            var user = new AV.User()
+            user.setUsername(username)
+            user.setPassword(password)
+            user.signUp().then(function(loginedUser) {
+                resolve(loginedUser)
             }, function(error) {
                 reject(error)
             })
