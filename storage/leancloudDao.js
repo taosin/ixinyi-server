@@ -28,9 +28,9 @@ class leancloudDao {
             const query = new AV.Query(table)
 
             // 返回条数
-            query.limit(JSON.parse(page).limit || 20)
+            query.limit(page.limit || 20)
                 // 查询起始位置
-            query.skip(JSON.parse(page).start || 0)
+            query.skip(page.start || 0)
                 // // 开始时间
             query.greaterThanOrEqualTo(timeParam || 'createdAt', new Date(startTime || '1900-01-01'))
                 // // 结束时间
@@ -117,7 +117,7 @@ class leancloudDao {
         }.bind(this))
     }
 
-    // 手机号码获取验证码
+    // 手机号码获取验证码注册
     requestSmsCode(phone) {
         return new Promise(function(resolve, reject) {
             AV.Cloud.requestSmsCode(phone).then(function(success) {
@@ -155,5 +155,68 @@ class leancloudDao {
             })
         }.bind(this))
     }
+
+    // 用户名和密码登录
+    logIn(username, password) {
+        return new Promise(function(resolve, reject) {
+            AV.User.logIn(username, password).then(function(success) {
+                resolve(success)
+                console.log('start', success, 'end')
+            }, function(error) {
+                resolve(error)
+            })
+        })
+    }
+
+    // 手机和密码登录
+    logInWithMobilePhone(phone, password) {
+        return new Promise(function(resolve, reject) {
+            AV.User.logInWithMobilePhone(phone, password).then(function(success) {
+                console.info('success')
+            }, function(error) {
+                console.info('error')
+            })
+        })
+    }
+
+    // 手机号码获取验证码登录
+    requestLoginSmsCode(phone) {
+        return new Promise(function(resolve, reject) {
+            AV.Cloud.requestLoginSmsCode(phone).then(function(success) {
+                console.info('success')
+            }, function(error) {
+                console.info('error')
+            })
+        })
+    }
+
+    // 根据手机号码和验证登录
+    logInWithMobilePhoneSmsCode(phone, smsCode) {
+        return new Promise(function(resolve, reject) {
+            AV.User.logInWithMobilePhoneSmsCode(phone, smsCode).then(function(success) {
+                console.info('success')
+            }, function(error) {
+                console.info('error')
+            })
+        })
+    }
+
+    // 获取当前用户的信息
+    getCurrentUser() {
+        return new Promise(function(resolve, reject) {
+            var currentUser = AV.User.current()
+            if (currentUser) {
+                // 获取当前用户的sessionToken
+                var sessionToken = currentUser.getSessionToken()
+                resolve({
+                    sessionToken: sessionToken,
+                    user: currentUser
+                })
+            } else {
+                resolve('当前没有用户登录！')
+            }
+        })
+    }
+
 }
 module.exports = new leancloudDao()
