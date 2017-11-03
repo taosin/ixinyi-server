@@ -6,6 +6,7 @@ var table = '_User'
 
 class UserService { *
     signUp(json) {
+        console.log(json)
         var data = yield leancloudDao.signUpWithUsernameAndPassword(json.username, json.password)
         return data
     }

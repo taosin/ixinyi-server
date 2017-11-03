@@ -146,9 +146,12 @@ class leancloudDao {
             user.setUsername(username)
             user.setPassword(password)
             user.signUp().then(function(loginedUser) {
-                resolve(loginedUser)
+                resolve({
+                    code: 100,
+                    result: loginedUser
+                })
             }, function(error) {
-                reject(error)
+                resolve(error)
             })
         }.bind(this))
     }

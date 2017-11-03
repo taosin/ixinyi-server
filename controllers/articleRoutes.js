@@ -11,12 +11,13 @@ module.exports = function(app) {
 
     // 获取文章总数
     app.get('/articles/readInfos', function*(req, res) {
-            var data = yield* articleService.getReadInfos(req.query);
-            res.json({
-                data: data
-            })
+        var data = yield* articleService.getReadInfos(req.query);
+        res.json({
+            data: data
         })
-        // 获取文章
+    })
+
+    // 获取文章
     app.get('/articles', function(req, res) {
             var start = req.query.start
             var limit = req.query.limit
