@@ -26,8 +26,8 @@ class leancloudDao {
     getDataFindPage(table, page, params, timeParam, startTime, endTime, sortBy, sort) {
         return new Promise(function(resolve, reject) {
             const query = new AV.Query(table)
-
-            // 返回条数
+            page = JSON.parse(page)
+                // 返回条数
             query.limit(page.limit || 20)
                 // 查询起始位置
             query.skip(page.start || 0)
@@ -96,23 +96,21 @@ class leancloudDao {
     // 添加数据
     createRecord(table, data) {
         return new Promise(function(resolve, reject) {
-            var CreateTable = AV.object.extend(table)
+            var CreateTable = AV.Object.extend(table)
             var createTable = new CreateTable()
             if (data) {
-                var newParams = JSON.parse(data)
+                var newParams = data
                 for (var key in newParams) {
                     createTable.set(key, newParams[key])
                 }
             }
             createTable.set('isDeleted', false)
-            createTable.save().then(function(todo) {
-                if (todo.id) {
-                    resolve(todo.id)
-                } else {
-                    resolve('failure')
+            createTable.save().then(function(result) {
+                if (result.id) {
+                    resolve(result)
                 }
             }, function(error) {
-                reject(error)
+                resolve(error)
             })
         }.bind(this))
     }
