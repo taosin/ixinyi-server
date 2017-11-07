@@ -24,5 +24,12 @@ class ArticleService {
         var data = yield leancloudDao.createRecord(table, json)
         return data
     }
+
+    // 获取文章
+    *
+    queryArticles(json) {
+        var data = yield leancloudDao.getDataFindPage(table, json.page, json.params, json.timeParam, json.startTime, json.endTime, json.sortBy, json.sort)
+        return data
+    }
 }
 module.exports = new ArticleService()

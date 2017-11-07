@@ -9,7 +9,7 @@ var AV = require('leanengine')
 var articleService = require('../service/articleService')
 module.exports = function(app) {
 
-    // 获取文章总数
+    // 获取阅读轨迹
     app.get('/articles/readInfos', function*(req, res) {
         var data = yield* articleService.getReadInfos(req.query)
         res.json({
@@ -21,6 +21,14 @@ module.exports = function(app) {
     app.post('/articles/save', function*(req, res) {
         var json = req.body
         var data = yield* articleService.saveArticle(json)
+        res.json({
+            data: data
+        })
+    })
+
+    // 获取文章
+    app.get('/articles/query', function*(req, res) {
+        var data = yield* articleService.queryArticles(req.query)
         res.json({
             data: data
         })
