@@ -18,7 +18,7 @@ class ArticleService {
         return data
     }
 
-    // 添加文章
+    // 创建文章
     *
     saveArticle(json) {
         var data = yield leancloudDao.createRecord(table, json)
@@ -31,5 +31,20 @@ class ArticleService {
         var data = yield leancloudDao.getDataFindPage(table, json.page, json.params, json.timeParam, json.startTime, json.endTime, json.sortBy, json.sort)
         return data
     }
+
+    // 删除文章
+    *
+    deleteArticles(json) {
+        var data = yield leancloudDao.deleteRecord(table, json.id)
+        return data
+    }
+
+    // 修改文章
+    *
+    updateArticles(json) {
+        var data = yield leancloudDao.deleteRecord(table, json.id)
+        return data
+    }
+
 }
 module.exports = new ArticleService()

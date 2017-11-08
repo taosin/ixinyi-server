@@ -17,7 +17,7 @@ module.exports = function(app) {
         })
     })
 
-    // 保存文章
+    // 创建新文章
     app.post('/article', function*(req, res) {
         var json = req.body
         var data = yield* articleService.saveArticle(json)
@@ -36,6 +36,11 @@ module.exports = function(app) {
 
     // 删除文章
     app.delete('/article/:id', function(req, res) {
+        console.log(req.params.id)
+    })
+
+    // 更改文章
+    app.put('/article/:id', function(req, res) {
         console.log(req.params.id)
     })
 }
