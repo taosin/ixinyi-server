@@ -93,6 +93,22 @@ class leancloudDao {
         }.bind(this))
     }
 
+    // 更新数据
+    updateRecord(table, objectId, params) {
+        return new Promise(function(resolve, reject) {
+            var updateData = AV.Object.createWithoutData(table, objectId)
+            if (params) {
+                var newParams = JSON.parse(params)
+                for (var key in newParams) {
+                    updateData.set(key, newParams[key])
+                }
+            }
+            updateData.save().then(function(result) {
+                resolve(result)
+            })
+        }.bind(this))
+    }
+
     // 添加数据
     createRecord(table, data) {
         return new Promise(function(resolve, reject) {
