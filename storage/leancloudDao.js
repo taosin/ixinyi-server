@@ -307,5 +307,19 @@ class leancloudDao {
             })
         })
     }
+
+    // 获取第一条数据
+    getFirstData(table, fileds) {
+        var query = new AV.Query('Comment')
+        var newParams = fields
+        for (var key in newParams) {
+            query.equalTo(key, newParams[key])
+        }
+        query.first().then(function(data) {
+            return data
+        }, function(error) {
+            return error
+        })
+    }
 }
 module.exports = new leancloudDao()
