@@ -232,5 +232,80 @@ class leancloudDao {
         })
     }
 
+    // 字段完全匹配查询数据
+    findDataByEqualToField(table, fields) {
+        return new Promise(function(resolve, reject) {
+            var query = new AV.Query(table)
+            var newParams = fields
+            for (var key in newParams) {
+                query.equalTo(key, newParams[key])
+            }
+            query.find().then(function(results) {
+                resolve(results)
+            }, function(err) {
+                resolve(err)
+            })
+        })
+    }
+
+    // 包含查询
+    findDataByContainsField(table, fields) {
+        return new Promise(function(resolve, reject) {
+            var query = new AV.Query(table)
+            var newParams = fields
+            for (var key in newParams) {
+                query.contains(key, newParams[key])
+            }
+            query.find().then(function(results) {
+                resolve(results)
+            }, function(err) {
+                resolve(err)
+            })
+        })
+    }
+
+    // 前缀查询
+    findDataByStartsWithField(table, fields) {
+        return new Promise(function(resolve, reject) {
+            var query = new AV.Query(table)
+            var newParams = fields
+            for (var key in newParams) {
+                query.startsWith(key, newParams[key])
+            }
+            query.find().then(function(results) {
+                resolve(results)
+            }, function(err) {
+                resolve(err)
+            })
+        })
+    }
+
+    // 数组查询
+    findDataByStartsWithArray(table, field, array) {
+        return new Promise(function(resolve, reject) {
+            var query = new AV.Query(table)
+            var arr = array
+            query.containsAll(field, arr)
+            query.find().then(function(results) {
+                resolve(results)
+            }, function(err) {
+                resolve(err)
+            })
+        })
+    }
+
+    // 不包含查询
+    findDataByNotContainedIn(table, field, array) {
+        return new Promise(function(resolve, reject) {
+            var query = new AV.Query(table)
+            var arr = array
+            query.notContainedIn(field, arr)
+            query.find().then(function(results) {
+                resolve(results)
+            }, function(err) {
+                resolve(err)
+            })
+        })
+    }
 }
 module.exports = new leancloudDao()
