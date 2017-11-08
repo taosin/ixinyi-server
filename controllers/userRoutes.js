@@ -19,7 +19,7 @@ module.exports = function(app) {
         })
     })
 
-    // 登录
+    // 获取当前用户信息
     app.get('/user/getCurrentUser', function*(req, res) {
         var data = yield* userService.getCurrentUser()
         res.json({
