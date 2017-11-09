@@ -9,9 +9,11 @@ var articleRoutes = require('./articleRoutes')
 var readInfoRoutes = require('./readInfoRoutes')
 var codingRoutes = require('./codingRoutes')
 var userRoutes = require('./userRoutes')
+var fileRoutes = require('./fileRoutes')
 module.exports = function(app) {
     articleRoutes(app)
     readInfoRoutes(app)
     codingRoutes(app)
     userRoutes(app)
+    fileRoutes(app)
 }

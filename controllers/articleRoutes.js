@@ -5,8 +5,8 @@
  * @Last Modified time: 2017-10-27 00:52:35
  */
 
-var AV = require('leanengine')
 var articleService = require('../service/articleService')
+var fs = require('fs')
 module.exports = function(app) {
 
     // 获取阅读轨迹
@@ -43,4 +43,5 @@ module.exports = function(app) {
     app.put('/article/:id', function(req, res) {
         console.log(req.params.id)
     })
+
 }
