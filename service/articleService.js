@@ -34,8 +34,8 @@ class ArticleService {
 
     // 删除文章
     *
-    deleteArticles(json) {
-        var data = yield leancloudDao.deleteRecord(table, json.id)
+    deleteArticles(id) {
+        var data = yield leancloudDao.deleteRecord(table, id)
         return data
     }
 

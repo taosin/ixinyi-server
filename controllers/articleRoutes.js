@@ -35,13 +35,18 @@ module.exports = function(app) {
     })
 
     // 删除文章
-    app.delete('/article/:id', function(req, res) {
-        console.log(req.params.id)
+    app.delete('/article/:id', function*(req, res) {
+        var id = req.params.id
+        console.log(id)
+        var data = yield* articleService.deleteArticles(id)
+        res.json({
+            data: data
+        })
     })
 
     // 更改文章
-    app.put('/article/:id', function(req, res) {
-        console.log(req.params.id)
+    app.put('/article/:id', function*(req, res) {
+        var id = req.params.id
+        var data = yield* articleService.deleteArticles(id)
     })
-
 }
