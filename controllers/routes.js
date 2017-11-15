@@ -10,10 +10,12 @@ var readInfoRoutes = require('./readInfoRoutes')
 var codingRoutes = require('./codingRoutes')
 var userRoutes = require('./userRoutes')
 var fileRoutes = require('./fileRoutes')
+var todoRoutes = require('./todoRoutes')
 module.exports = function(app) {
     articleRoutes(app)
     readInfoRoutes(app)
     codingRoutes(app)
     userRoutes(app)
     fileRoutes(app)
+    todoRoutes(app)
 }
