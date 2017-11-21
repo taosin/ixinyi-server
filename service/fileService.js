@@ -2,6 +2,7 @@
  * taoxin
  * 2017-11-09
  */
+var request = require('request')
 var fs = require('fs')
 var co = require('co')
 class FileService {
@@ -28,6 +29,20 @@ class FileService {
                 obj.filename = itm
                 filesList.push(obj)
             }
+        })
+    }
+
+    doDownloadFile(uri, filename, callback) {
+        var stream = fs.createWriteStream(filename)
+        request(uri).pipe(stream).on('close', callback)
+    }
+
+    *
+    downloadFile() {
+        var fileUrl = 'https://video.ketang.im/material/p0005_oc/media/30.mov'
+        var filename = '30.mov'
+        this.doDownloadFile(fileUrl, filename, function() {
+            console.log(filename + '下载完毕')
         })
     }
 }
