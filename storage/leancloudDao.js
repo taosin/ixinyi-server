@@ -26,7 +26,7 @@ class leancloudDao {
     getDataFindPage(table, page, params, timeParam, startTime, endTime, sortBy, sort) {
         return new Promise(function(resolve, reject) {
             const query = new AV.Query(table)
-            page = JSON.parse(page)
+            page = page ? JSON.parse(page) : {}
                 // 返回条数
             query.limit(page.limit || 20)
                 // 查询起始位置
