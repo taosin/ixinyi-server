@@ -2,13 +2,13 @@
  * @Author: iMocco
  * @Date:   2017-03-16 16:59:33
  * @Last Modified by:   iMocco
- * @Last Modified time: 2017-10-27 04:13:39
+ * @Last Modified time: 2017-12-25 17:56:44
  */
-'use strict'
+ 'use strict'
 
-var AV = require('leanengine')
+ var AV = require('leanengine')
 
-class leancloudDao {
+ class leancloudDao {
 
     // 获取总数
     getCount(table) {
@@ -28,28 +28,28 @@ class leancloudDao {
             const query = new AV.Query(table)
             page = page ? JSON.parse(page) : {}
                 // 返回条数
-            query.limit(page.limit || 20)
+                query.limit(page.limit || 20)
                 // 查询起始位置
-            query.skip(page.start || 0)
+                query.skip(page.start || 0)
                 // // 开始时间
-            query.greaterThanOrEqualTo(timeParam || 'createdAt', new Date(startTime || '1900-01-01'))
+                query.greaterThanOrEqualTo(timeParam || 'createdAt', new Date(startTime || '1900-01-01'))
                 // // 结束时间
-            query.lessThanOrEqualTo(timeParam || 'createdAt', new Date(endTime || '2300-01-01'))
-            if (params) {
-                var newParams = JSON.parse(params)
-                for (var key in newParams) {
-                    query.equalTo(key, newParams[key])
+                query.lessThanOrEqualTo(timeParam || 'createdAt', new Date(endTime || '2300-01-01'))
+                if (params) {
+                    var newParams = JSON.parse(params)
+                    for (var key in newParams) {
+                        query.equalTo(key, newParams[key])
+                    }
                 }
-            }
             // query.equalTo('isDeleted', false)
             if (sort) {
                 switch (sort) {
                     case 1:
-                        query.descending(timeParam || 'createdAt')
-                        break
+                    query.descending(timeParam || 'createdAt')
+                    break
                     case -1:
-                        query.ascending(timeParam || 'createdAt')
-                        break
+                    query.ascending(timeParam || 'createdAt')
+                    break
                 }
             } else {
                 query.descending(timeParam || 'createdAt')
@@ -319,6 +319,18 @@ class leancloudDao {
             return data
         }, function(error) {
             return error
+        })
+    }
+
+    // 根据ID获取数据
+    getDataById(table,objectId){
+        return new Promise(function(resolve, reject) {
+            var query = new AV.Query(table);
+            query.get(objectId).then(function (result) {
+                resolve(result)
+            }, function (error) {
+                resolve(error)
+            });
         })
     }
 }

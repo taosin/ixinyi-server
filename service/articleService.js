@@ -2,7 +2,7 @@
  * @Author: iMocco
  * @Date:   2017-03-16 17:46:23
  * @Last Modified by:   iMocco
- * @Last Modified time: 2017-10-27 00:52:27
+ * @Last Modified time: 2017-12-25 17:57:10
  */
 'use strict'
 var co = require('co')
@@ -44,6 +44,13 @@ class ArticleService {
     updateArticles(json) {
         var data = yield leancloudDao.deleteRecord(table, json.id)
         return data
+    }
+
+    // 获取文章详情
+    *
+    queryArticleById(id){
+        var data = yield leancloudDao.getDataById(table,id);
+        return data;
     }
 
 }
